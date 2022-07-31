@@ -1,5 +1,8 @@
 # MIDtoEXO
- まいまいさんの[RPPtoEXO](https://github.com/maimai22015/RPPtoEXO)のMID版がほしいと思い立って制作を始めたプロジェクトです<br>
+ ![](https://img.shields.io/badge/python-3.10-blue)
+ [![](https://img.shields.io/github/license/yak9909/MIDtoEXO)](LICENSE)
+
+ まいまいさんの [RPPtoEXO](https://github.com/maimai22015/RPPtoEXO) のMID版がほしいと思い立って制作を始めたプロジェクトです<br>
  `.mid` ファイルからAviUtlのオブジェクトファイル (`.exo`) を作成できますが<br>
  上手く使えば普通にAviUtlのオブジェクトライブラリとして使えるかもしれない<br>
  ( なお既にある模様 -> [exolib](https://github.com/tikubonn/exolib) )
