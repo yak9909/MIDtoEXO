@@ -1,0 +1,4 @@
+
+
+class NotesOverlapError(BaseException):
+    pass
