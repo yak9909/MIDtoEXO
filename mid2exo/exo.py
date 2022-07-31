@@ -13,25 +13,28 @@ class EXO:
         # midファイルの読み込み
         mid = mido.MidiFile(fp)
         
-        current_channel = 0
         max_layer = 0
         layers = {str(x+1): [] for x in range(99)}
         
         # note取得
         for track in mid.tracks:
+            
             current_frame = 1
             if max_layer:
                 for x in range(int(list(layers.keys())[0]), max_layer+1):
                     del layers[str(x)]
             
             for msg in track:
+                # note情報でなければ引き返す
                 if msg.type not in ["note_on", "note_off"]:
                     continue
                 
+                # AviUtl用の長さにする（？）
                 time = msg.time // 4
                 current_frame += time
 
                 if msg.type == "note_on":
+                    # 空いてるレイヤーにnoteを入れる
                     for x in layers.keys():
                         if layers[x] == []:
                             layers[x] = [msg.note, current_frame]
@@ -40,28 +43,27 @@ class EXO:
                         elif layers[x][0] == msg.note:
                             raise NotesOverlapError("同チャンネルのノーツが重なっています！")
                 
-                
                 if msg.type == "note_off":
-                    nt = []
-                    ind = "0"
+                    note = []
+                    layer = "0"
                     
                     for x in layers.keys():
                         if not layers[x] == []:
                             if layers[x][0] == msg.note:
-                                nt = layers[x]
-                                ind = x
+                                note = layers[x]
+                                layer = x
                                 break
                     
                     self.objects.append(
                         Object(
                             [FilterType.Position()],
-                            start=nt[1],
+                            start=note[1],
                             end=current_frame - 1,
-                            layer=int(ind)
+                            layer=int(layer)
                         )
                     )
                     
-                    layers[ind] = []
+                    layers[layer] = []
     
     def dump(self, fp):
         open(fp, "w", encoding="cp932").close()
