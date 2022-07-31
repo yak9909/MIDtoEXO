@@ -30,8 +30,6 @@ class EXO:
                 
                 time = msg.time // 4
                 current_frame += time
-                
-                print(msg)
 
                 if msg.type == "note_on":
                     for x in layers.keys():
