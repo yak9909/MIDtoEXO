@@ -35,13 +35,16 @@ class EXO:
 
                 if msg.type == "note_on":
                     # 空いてるレイヤーにnoteを入れる
+                    _layer = "0"
                     for x in layers.keys():
                         if layers[x] == []:
-                            layers[x] = [msg.note, current_frame]
-                            max_layer = max(0, int(x))
-                            break
+                            if _layer == "0":
+                                _layer = x
                         elif layers[x][0] == msg.note:
                             raise NotesOverlapError("同チャンネルのノーツが重なっています！")
+                    
+                    layers[_layer] = [msg.note, current_frame]
+                    max_layer = max(0, int(_layer))
                 
                 if msg.type == "note_off":
                     note = []
