@@ -1,7 +1,9 @@
 import tkinter as tk
+import tkinter.messagebox
 from tkinter import ttk
 from ttkthemes import *
 import gui
+import mid2exo
 import json
 import os
 
@@ -25,12 +27,30 @@ class Main(ThemedTk):
         # オプションフレーム
         self.option_frame = gui.OptionFrame(self.main_frame, text="オプション", relief="groove", padding=[0,0,0,50])
         # EXO生成ボタン
-        self.generate_exo = ttk.Button(self.main_frame, text="EXO生成!!")
+        self.generate_exo = ttk.Button(self.main_frame, text="EXO生成!!", command=lambda: self.generate())
         
         self.main_frame.pack(expand=True, fill=tk.BOTH)
         self.browse_frame.pack(side=tk.TOP)
         self.option_frame.pack(side=tk.TOP, anchor=tk.W, fill=tk.X, padx=8, pady=10)
         self.generate_exo.pack(side=tk.TOP, anchor=tk.E, padx=8)
+    
+    def generate(self):
+        exo = mid2exo.EXO()
+        
+        try:
+            exo.from_mid(self.browse_frame.mid_path.get())
+        except FileNotFoundError:
+            tk.messagebox.showerror("MID to EXO エラー", "midiファイルが存在しません!!")
+            return
+        except mid2exo.NotesOverlapError as e:
+            tk.messagebox.showerror("MID to EXO エラー", f"同チャンネルのノーツが重なっているため\n正常に生成できませんでした…\n\n{e}")
+            return
+        except Exception as e:
+            tk.messagebox.showerror("MID to EXO エラー", f"予期せぬエラーが発生しました。開発者にお知らせください\n\n{e}")
+            return
+        
+        exo.dump(self.browse_frame.exo_path.get())
+        tk.messagebox.showinfo("MID to EXO", "多分正常に生成できました!")
 
 
 if __name__ == "__main__":
