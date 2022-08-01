@@ -50,7 +50,7 @@ class Main(ThemedTk):
     
     def generate(self):
         try:
-            self.exo.from_mid(self.browse_frame.mid_path.get(), self.browse_frame.bpm.get(), self.option_frame.option1.get())
+            self.exo.from_mid(self.browse_frame.mid_path.get(), self.browse_frame.fps.get(), self.option_frame.option1.get())
         except FileNotFoundError:
             tk.messagebox.showerror("MID to EXO エラー", "midiファイルが存在しません!!")
             return

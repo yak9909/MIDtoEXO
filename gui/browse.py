@@ -20,9 +20,9 @@ class BrowseFrame(ttk.Frame):
         # exo生成フォルダのパス
         self.exo = tk.StringVar()
         self.exo.trace('w', self.update)
-        # BPM値
-        self.bpm = tk.IntVar()
-        self.bpm.set(66)
+        # FPS値
+        self.fps = tk.IntVar()
+        self.fps.set(66)
         
         self.mid_placeholder = ".midファイル"
         self.exo_placeholder = ".exo生成フォルダ"
@@ -40,9 +40,9 @@ class BrowseFrame(ttk.Frame):
         self.exo_path = PlaceholderEntry(self.browse_frame, self.exo_placeholder, textvariable=self.exo)
         self.exo_browse = ttk.Button(self.browse_frame, text="参照", padding=[1, 2], command=lambda: self.exo_fileopen())
         
-        # BPMの設定
-        self.bpm_label = ttk.Label(self.param_frame, text="FPS:")
-        self.bpm_entry = ttk.Entry(self.param_frame, textvariable=self.bpm, width=4)
+        # FPSの設定
+        self.fps_label = ttk.Label(self.param_frame, text="FPS:")
+        self.fps_entry = ttk.Entry(self.param_frame, textvariable=self.fps, width=4)
         
         self.update()
         
@@ -68,9 +68,9 @@ class BrowseFrame(ttk.Frame):
         # パラメータフレーム
         self.param_frame.grid(column=1, row=1, padx=8)
         
-        # BPM
-        self.bpm_label.grid(column=0, row=0)
-        self.bpm_entry.grid(column=1, row=0)
+        # FPS
+        self.fps_label.grid(column=0, row=0)
+        self.fps_entry.grid(column=1, row=0)
     
     def mid_fileopen(self):
         filetypes = [('Midiファイル', ['*.mid', '*.midi'])] 
