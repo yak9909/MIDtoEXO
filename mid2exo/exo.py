@@ -50,7 +50,7 @@ class EXO:
                         if _layer == "0":
                             _layer = x
                     elif layers[x][0] == msg.note:
-                        raise NotesOverlapError("同チャンネルのノーツが重なっています！")
+                        raise NotesOverlapError(f"同チャンネルのノーツが重なっています！\nExcepted Notes {msg.note}\nExcepted Channel:{msg.channel}")
                 
                 layers[_layer] = [msg.note, current_frame]
                 max_layer = max(0, int(_layer))
