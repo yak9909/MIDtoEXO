@@ -12,7 +12,7 @@ class BrowseFrame(ttk.Frame):
         self.exo_browse = None
         
         # .mid と .exo の一括参照ボタン
-        self.browse_all = ttk.Button(self, text="参照", command=lambda: self.fileopen())
+        self.browse_all = ttk.Button(self, text="一括参照", command=lambda: self.fileopen())
         
         # midファイルのパス
         self.mid = tk.StringVar()
@@ -75,15 +75,17 @@ class BrowseFrame(ttk.Frame):
         filetypes = [('Midiファイル', ['*.mid', '*.midi'])] 
         file = tk.filedialog.askopenfilename(title="Midiファイルを選択してください", filetypes=filetypes)
         
-        self.mid_path.delete(0,"end")
-        self.mid_path.insert_t(0, file.replace("/", "\\"))
+        if file:
+            self.mid_path.delete(0,"end")
+            self.mid_path.insert_t(0, file.replace("/", "\\"))
     
     def exo_fileopen(self):
         filetypes = [('AviUtlオブジェクトファイル', '*.exo')] 
         file = tk.filedialog.asksaveasfilename(title="EXOファイルの保存先を選択してください", filetypes=filetypes, defaultextension="exo")
         
-        self.exo_path.delete(0,"end")
-        self.exo_path.insert_t(0, file.replace("/", "\\"))
+        if file:
+            self.exo_path.delete(0,"end")
+            self.exo_path.insert_t(0, file.replace("/", "\\"))
     
     def fileopen(self):
         self.mid_fileopen()

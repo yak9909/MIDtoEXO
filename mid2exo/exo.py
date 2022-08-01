@@ -9,11 +9,14 @@ class EXO:
     def __init__(self):
         self.objects = []
     
-    def from_mid(self, fp):
+    def from_mid(self, fp, option1):
+        self.objects.clear()
+        
         # midファイルの読み込み
         mid = mido.MidiFile(fp)
         
         max_layer = 0
+        additional_layer = 0
         layers = {str(x+1): [] for x in range(99)}
         
         messages = mido.MidiTrack()
@@ -29,8 +32,9 @@ class EXO:
         for msg in messages:
             if not current_channel == msg.channel:
                 current_frame = 1
+                additional_layer = 0
                 if max_layer:
-                    for x in range(int(list(layers.keys())[0]), max_layer+1):
+                    for x in range(int(list(layers.keys())[0]), max_layer+1+int(option1)):
                         del layers[str(x)]
                 current_channel = msg.channel
             
@@ -45,12 +49,15 @@ class EXO:
             if msg.type == "note_on":
                 # 空いてるレイヤーにnoteを入れる
                 _layer = "0"
-                for x in layers.keys():
+                for x in list(layers.keys())[additional_layer:]:
                     if layers[x] == []:
                         if _layer == "0":
                             _layer = x
                     elif layers[x][0] == msg.note:
                         raise NotesOverlapError(f"同チャンネルのノーツが重なっています！\nExcepted Notes {msg.note}\nExcepted Channel:{msg.channel}")
+                
+                if option1:
+                    additional_layer = int(not additional_layer)
                 
                 layers[_layer] = [msg.note, current_frame]
                 max_layer = max(0, int(_layer))
@@ -76,6 +83,19 @@ class EXO:
                 )
                 
                 layers[layer] = []
+    
+    def get_bpm(self, fp):
+        # midファイルの読み込み
+        mid = mido.MidiFile(fp)
+        
+        tempo = 0
+        
+        for track in mid.tracks:
+            for msg in track:
+                if msg.type == "set_tempo":
+                    tempo = msg.tempo
+                    
+        return int(mido.tempo2bpm(tempo))
     
     def dump(self, fp):
         open(fp, "w", encoding="cp932").close()
