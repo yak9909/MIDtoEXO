@@ -4,15 +4,23 @@ from tkinter import ttk
 from ttkthemes import *
 import gui
 import mid2exo
-import json
+import sys
 import os
+
+
+# リソースファイルの参照
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 
 class Main(ThemedTk):
     def __init__(self, theme, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.title('MID to EXO')
+        self.title('MIDtoEXO v1.10')
         self.minsize(width=370, height=300)
+        self.iconbitmap(default=resource_path("icon.ico"))
         
         # スタイルの設定
         self.theme = ttk.Style()
@@ -36,11 +44,13 @@ class Main(ThemedTk):
         self.generate_exo.pack(side=tk.TOP, anchor=tk.E, padx=8)
         
         self.exo = mid2exo.EXO()
-        self.browse_frame.mid.trace("w", self.set_bpm)
+        
+        print("起動しました!")
+        print("MIDtoEXO v1.10")
     
     def generate(self):
         try:
-            self.exo.from_mid(self.browse_frame.mid_path.get(), self.option_frame.option1.get())
+            self.exo.from_mid(self.browse_frame.mid_path.get(), self.browse_frame.bpm.get(), self.option_frame.option1.get())
         except FileNotFoundError:
             tk.messagebox.showerror("MID to EXO エラー", "midiファイルが存在しません!!")
             return
@@ -56,30 +66,3 @@ class Main(ThemedTk):
         
         self.exo.dump(self.browse_frame.exo_path.get())
         tk.messagebox.showinfo("MID to EXO", "多分正常に生成できました!")
-    
-    def set_bpm(self, a, b, c):
-        if os.path.exists(self.browse_frame.mid.get()):
-            try:
-                if self.browse_frame.bpm.get():
-                    return
-            except tk.TclError:
-                pass
-
-            self.browse_frame.bpm.set(self.exo.get_bpm(self.browse_frame.mid_path.get()))
-
-
-if __name__ == "__main__":
-    themes = {
-        "light": ["arc", "#d3d3d3"],
-        "dark": ["equilux", "#656565"]
-    }
-    
-    theme = themes["light"]
-    
-    if os.path.exists("./config.json"):
-        config = json.load( open("./config.json", mode="r", encoding="utf-8") )
-        if config.get("dark_mode"):
-            theme = themes["dark"]
-    
-    main = Main(theme=theme)
-    main.mainloop()

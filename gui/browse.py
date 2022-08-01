@@ -22,6 +22,7 @@ class BrowseFrame(ttk.Frame):
         self.exo.trace('w', self.update)
         # BPM値
         self.bpm = tk.IntVar()
+        self.bpm.set(66)
         
         self.mid_placeholder = ".midファイル"
         self.exo_placeholder = ".exo生成フォルダ"
@@ -40,7 +41,7 @@ class BrowseFrame(ttk.Frame):
         self.exo_browse = ttk.Button(self.browse_frame, text="参照", padding=[1, 2], command=lambda: self.exo_fileopen())
         
         # BPMの設定
-        self.bpm_label = ttk.Label(self.param_frame, text="BPM:")
+        self.bpm_label = ttk.Label(self.param_frame, text="FPS:")
         self.bpm_entry = ttk.Entry(self.param_frame, textvariable=self.bpm, width=4)
         
         self.update()

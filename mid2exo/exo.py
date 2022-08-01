@@ -1,15 +1,15 @@
-from re import X
-import mido
 from .object import *
 from .filter import *
 from .error import *
+import mido
+import math
 
 
 class EXO:
     def __init__(self):
         self.objects = []
     
-    def from_mid(self, fp, option1):
+    def from_mid(self, fp, fps, option1):
         self.objects.clear()
         
         # midファイルの読み込み
@@ -43,7 +43,7 @@ class EXO:
                 continue
             
             # AviUtl用の長さにする（？）
-            time = msg.time // 4
+            time = msg.time / (24 / (fps/11))
             current_frame += time
 
             if msg.type == "note_on":
@@ -76,8 +76,8 @@ class EXO:
                 self.objects.append(
                     Object(
                         [FilterType.Position()],
-                        start=note[1],
-                        end=current_frame - 1,
+                        start=math.ceil(note[1]),
+                        end=math.ceil(current_frame) - 1,
                         layer=int(layer)
                     )
                 )

@@ -1,5 +1,3 @@
-
-
 class Filter:
     def __init__(self, name, params):
         self.name = name
