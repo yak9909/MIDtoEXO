@@ -11,7 +11,7 @@
  [Releases](https://github.com/yak9909/MIDtoEXO/releases) から最新の MIDtoEXO をダウンロードしてzipファイルを解凍してください<br>
  ちなみに起動クッッッッッソ遅いです　なめてんの？ってくらい　ちゃんと起動するので安心してお待ち下さい<br>
  遅いのが嫌だったら [requirements.txt](requirements.txt) を `pip install -r requirements.txt` して
- [guirun.py](guirun.py) を起動するとムッチャ早く起動できます
+ [guirun.pyw](guirun.pyw) を起動するとムッチャ早く起動できます
 
 ## config.json について
  ```json
