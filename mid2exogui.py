@@ -18,8 +18,8 @@ def resource_path(relative_path):
 class Main(ThemedTk):
     def __init__(self, theme, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.title('MIDtoEXO v1.10')
-        self.minsize(width=370, height=300)
+        self.title('MIDtoEXO v1.11')
+        self.minsize(width=370, height=320)
         self.iconbitmap(default=resource_path("icon.ico"))
         
         # スタイルの設定
@@ -46,7 +46,7 @@ class Main(ThemedTk):
         self.exo = mid2exo.EXO()
         
         print("起動しました!")
-        print("MIDtoEXO v1.10")
+        print("MIDtoEXO v1.11")
     
     def generate(self):
         try:
@@ -55,7 +55,7 @@ class Main(ThemedTk):
             tk.messagebox.showerror("MID to EXO エラー", "midiファイルが存在しません!!")
             return
         except mid2exo.NotesOverlapError as e:
-            res = tk.messagebox.askquestion("MID to EXO エラー", f"同チャンネルのノーツが重なっているため、\n正常に生成できない可能性があります。\n続けますか？\n\n{e}")
+            res = tk.messagebox.askquestion("MID to EXO エラー", f"同チャンネルのノーツが重なっているため、\n正常に生成できない可能性があります。\n続けますか？\n\nエラーの内容:\n{e}")
             if res == "yes":
                 self.exo.dump(self.browse_frame.exo_path.get())
                 tk.messagebox.showinfo("MID to EXO", "生成しました")

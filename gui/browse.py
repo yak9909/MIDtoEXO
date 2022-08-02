@@ -27,8 +27,8 @@ class BrowseFrame(ttk.Frame):
         self.mid_placeholder = ".midファイル"
         self.exo_placeholder = ".exo生成フォルダ"
         
-        self.browse_frame = ttk.Frame(self, relief=tk.SUNKEN, padding=4, width=10)
-        self.param_frame = ttk.Frame(self, relief=tk.SUNKEN, padding=4)
+        self.browse_frame = ttk.LabelFrame(self, text="ファイル", relief=tk.GROOVE, padding=4, width=10)
+        self.param_frame = ttk.LabelFrame(self, text="設定", relief=tk.GROOVE, padding=4)
         
         # .mid参照
         self.mid_label = ttk.Label(self.browse_frame, text=".mid", padding=[8,0,0,0])
