@@ -55,7 +55,7 @@ class Main(ThemedTk):
             tk.messagebox.showerror("MID to EXO エラー", "midiファイルが存在しません!!")
             return
         except mid2exo.NotesOverlapError as e:
-            res = tk.messagebox.askquestion("MID to EXO エラー", f"同チャンネルのノーツが重なっているため、\n正常に生成できない可能性があります。\n続けますか？\n\nエラーの内容:\n{e}")
+            res = tk.messagebox.askquestion("MID to EXO 警告", f"同チャンネルのノーツが重なっているため、\n正常に生成できない可能性があります。\n続けますか？\n\nエラーの内容:\n{e}")
             if res == "yes":
                 self.exo.dump(self.browse_frame.exo_path.get())
                 tk.messagebox.showinfo("MID to EXO", "生成しました")
