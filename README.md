@@ -1,3 +1,10 @@
+# [RPPtoEXO v2.0](https://github.com/Garech-mas/RPPtoEXO-ver2.0) でいいです
+
+
+
+
+このプロジェクト非公開にしたい
+
 # MIDtoEXO
  ![](https://img.shields.io/badge/python-3.10-blue)
  [![](https://img.shields.io/github/license/yak9909/MIDtoEXO)](LICENSE)
